@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+<!-- 指定连接数据库的 JDBC 驱动包所在位置，指定到你本机的完整路径 -->
+    <classPathEntry location="D:\apache-maven-work\repository\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar"/>
+
+        <!-- 配置 table 表信息内容体，target Runtime 指定采用 My Batis3 的版本 -->
+    <context id="tables" targetRuntime="MyBatis3">
+
+        <!-- 抑制生成注释，由于生成的注释都是英文的，可以不让它生成 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!-- 配置数据库连接信息 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/graduation"
+                        userId="root"
+                        password="yudi233">
+        </jdbcConnection>
+
+        <!-- 生成 model 类，target Package 指定 model 类的包名， target Project 指定
+    生成的 model 放在 eclipse 的哪个工程下面-->
+        <javaModelGenerator targetPackage="graduation.project.model"
+                            targetProject="D:\GraduationProject\02-project-interface\src\main\java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="false" />
+        </javaModelGenerator>
+
+        <!-- 生成 My Batis 的 Mapper.xml 文件，target Package 指定 mapper.xml 文件的
+    包名， target Project 指定生成的 mapper.xml 放在 eclipse 的哪个工程下面 -->
+        <sqlMapGenerator targetPackage="graduation.project.mapper"
+                         targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!-- 生成 My Batis 的 Mapper 接口类文件,target Package 指定 Mapper 接口类的包
+    名， target Project 指定生成的 Mapper 接口放在 eclipse 的哪个工程下面 -->
+        <javaClientGenerator type="XMLMAPPER"
+              targetPackage="graduation.project.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!-- 数据库表名及对应的 Java 模型类名 -->
+        <table tableName="t_manager" domainObjectName="Manager"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="t_user_location" domainObjectName="Location"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+    </context>
+
+</generatorConfiguration>
+
