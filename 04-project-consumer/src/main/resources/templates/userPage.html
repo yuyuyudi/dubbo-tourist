@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=4bT2wtcbuKYGqEkjxyR3UDIklYwFmVFn"></script>
+    <title>浏览器定位</title>
+</head>
+<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
+<body>
+<button id="shangfang">上方山购票</button>
+<button id="gugong">故宫</button>
+
+<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    var coordinatesX
+    var coordinatesY
+    var geolocation = new BMap.Geolocation();
+    geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            coordinatesX = r.point.lng
+            coordinatesY = r.point.lat
+            alert('您的位置：'+r.point.lng+','+r.point.lat);
+        }
+        else {
+            alert('failed'+this.getStatus());
+        }
+    },{enableHighAccuracy: true})
+
+    $("#shangfang").click(function(){
+        window.location.href = "/add/location?name=shangfang&coordinateX="+coordinatesX+"&coordinateY="+coordinatesY;
+    })
+    $("#gugong").click(function(){
+        window.location.href = "/add/location?name=gugong&coordinateX="+coordinatesX+"&coordinateY="+coordinatesY;
+    })
+</script>

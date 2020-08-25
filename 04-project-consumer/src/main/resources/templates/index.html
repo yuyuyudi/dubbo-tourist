@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>景区游客空间数据管理</title>
+</head>
+<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#click").click(function () {
+        })
+    })
+</script>
+<body>
+<a th:href="@{/managerLogin}">管理员登录</a><br>
+<a th:href="@{/userLogin}" onclick="return confirm('本网站需要您开启定位服务，是否授权登录？');">用户登录</a>
+</body>
+</html>

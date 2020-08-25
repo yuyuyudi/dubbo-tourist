@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=4bT2wtcbuKYGqEkjxyR3UDIklYwFmVFn"></script>
+    <title>管理员管理界面</title>
+</head>
+<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
+<body>
+登陆成功,欢迎<h1 th:text=" ${manager.name}"></h1>管理员</h1>
+<a th:href="@{/index}">退出</a>
+<div th:each="location,locationStatu:${locationList}">
+    <span th:text="${location.coordinateX}"></span>
+    <span th:text="${location.coordinateY}"></span>
+</div>
+<div id="allmap"></div>
+</body>
+</html>
+
+<script type="text/javascript">
+
+    // 百度地图API功能
+    var X = [[${manager.coordinatesX}]]
+    var Y = [[${manager.coordinatesY}]]
+    var name = new String("[[${manager.manager}]]")
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(X, Y);
+    map.centerAndZoom(point, 12);
+    var marker = new BMap.Marker(point);  // 创建标注
+    map.addOverlay(marker);               // 将标注添加到地图中
+    marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+    setTimeout(function(){
+        map.setZoom(14);
+    }, 2000);  //2秒后放大到14级
+    map.enableScrollWheelZoom(true);
+
+    // 编写自定义函数,创建标注
+    function addMarker(point){
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+    }
+    $.ajax({
+        type: "post",
+        dataType: "json",
+        url: '/location/display',
+        data: {
+            "name":name
+        },
+        success: function (data) {
+            $.each(data,function (i,n) {
+                var point = new BMap.Point(n.coordinateX,n.coordinateY)
+                addMarker(point);
+            })
+            alert("你好，我是一个警告框！");
+        }
+    });
+
+</script>
